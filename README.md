@@ -102,15 +102,17 @@ Ollama/Hugging Face. The application does not use a hosted LLM API by default.
 
 ## Optional diarization configuration
 
-Create a local `.env` file (it is ignored by Git) and add your Hugging Face
-token:
+Copy `.env.example` to `.env` and edit the local copy (which is ignored by
+Git). Add your Hugging Face token only if you want diarization:
 
 ```dotenv
-HF_TOKEN=hf_your_token_here
+HF_TOKEN=hf_your_real_token_here
 ```
 
 Accept the model terms on Hugging Face before using diarization. Without the
 token and accepted terms, ingestion continues without speaker labels.
+The checked-in `.env.example` contains defaults and a blank token placeholder;
+never replace that placeholder with your real token in the example file.
 
 ## Tests and development
 
