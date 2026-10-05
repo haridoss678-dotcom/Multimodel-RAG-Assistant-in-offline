@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RAG Assistant</title>
+<!-- Every asset is local. No CDN, no web font: nothing about a page load
+     leaves this machine (CLAUDE.md §9). -->
+<link rel="stylesheet" href="/static/app.css">
+<link rel="icon" href="data:,">
+</head>
+<body>
+<div class="app" id="app" data-panel="open" data-rail="closed">
+
+  <div class="brand"><span class="dot" aria-hidden="true"></span> RAG Assistant</div>
+
+  <header class="topbar">
+    <button class="ghost tiny" id="railToggle" aria-label="Toggle sources panel" title="Sources">☰</button>
+    <span class="spacer"></span>
+    <span class="meta tnum" id="envSummary" title="Startup environment report"></span>
+    <button class="ghost tiny" id="themeToggle" aria-label="Toggle light or dark theme">◐</button>
+    <button class="ghost tiny" id="panelToggle" aria-label="Toggle evidence panel">Evidence ▸</button>
+  </header>
+
+  <!-- ------------------------------------------------------------- rail -->
+  <aside class="rail" aria-label="Corpus and jobs">
+
+    <section class="group">
+      <h2>Scope</h2>
+      <div class="field">
+        <span>Answer using</span>
+        <div id="scopeSelect" class="scope-list" role="group"
+             aria-label="Which sources to answer from"></div>
+      </div>
+      <p class="hint" id="scopeHint"></p>
+    </section>
+
+    <section class="group">
+      <h2>Add a source</h2>
+      <div class="card">
+        <div id="dropZone" class="tile clickable" style="text-align:center;padding:16px">
+          <div>Drop a file here, or click to choose</div>
+          <div class="meta" style="margin-top:4px">PDF, audio, video</div>
+          <input type="file" id="fileInput" hidden
+                 accept=".pdf,.mp3,.wav,.m4a,.flac,.ogg,.mp4,.mov,.mkv,.webm,.avi">
+        </div>
+
+        <label class="field" style="margin-top:11px">
+          <span>Speech language (audio/video)</span>
+          <select id="speechMode"></select>
+        </label>
+        <label class="field">
+          <span>Scanned-page OCR language</span>
+          <select id="ocrLang">
+            <option value="en">English</option>
+            <option value="ta">Tamil</option>
+          </select>
+        </label>
+        <button class="primary" id="uploadBtn" style="width:100%;margin-top:6px" disabled>Ingest file</button>
+
+        <label class="field" style="margin-top:13px">
+          <span>…or a YouTube URL</span>
+          <input id="ytUrl" type="url" placeholder="https://youtu.be/…">
+        </label>
+        <button id="ytBtn" style="width:100%">Ingest YouTube</button>
+      </div>
+    </section>
+
+    <section class="group">
+      <h2>Sources</h2>
+      <div id="sourceList"></div>
+    </section>
+
+    <section class="group">
+      <h2>Conversations</h2>
+      <button id="newConvo" style="width:100%;margin-bottom:8px">New conversation</button>
+      <div id="convoList"></div>
+    </section>
+  </aside>
+
+  <!-- ----------------------------------------------------------- centre -->
+  <main class="centre" id="centre">
+    <div id="chatTab">
+      <div id="messages" aria-live="polite"></div>
+      <div id="waiting"></div>
+
+      <div class="composer">
+        <div class="scope" id="scopeChip">Scoped to: all sources</div>
+        <div class="row">
+          <textarea id="question" rows="1" placeholder="Ask a question…  (Enter to send, Shift+Enter for a new line)"
+                    aria-label="Your question"></textarea>
+          <button class="primary" id="sendBtn">Ask</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ------------------------------------------------------------ panel -->
+  <aside class="panel" id="panel" aria-label="Evidence and diagnostics">
+    <section class="group">
+      <h2>Evidence used</h2>
+      <div id="evidenceList"><p class="hint">Ask something to see the evidence behind the answer.</p></div>
+    </section>
+    <section class="group">
+      <h2>Diagnostics</h2>
+      <div id="diagnostics"><p class="hint">Retrieval strategy, citation checks and grounding verdict appear here.</p></div>
+    </section>
+  </aside>
+</div>
+
+<dialog id="viewer">
+  <div class="head">
+    <strong id="viewerTitle">Source</strong>
+    <button class="ghost tiny" id="viewerClose" aria-label="Close">✕</button>
+  </div>
+  <div class="body" id="viewerBody"></div>
+</dialog>
+
+<script type="module" src="/static/js/main.js"></script>
+</body>
+</html>

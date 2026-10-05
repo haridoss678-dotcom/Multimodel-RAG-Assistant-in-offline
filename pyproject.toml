@@ -1,0 +1,54 @@
+[project]
+name = "rag-assistant"
+version = "0.1.0"
+description = "Local conversational multi-modal RAG assistant"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "qdrant-client>=1.12",
+    "pymupdf4llm>=0.0.17",
+    "FlagEmbedding>=1.3",
+    "httpx>=0.27",
+    "pydantic>=2.9",
+    "pydantic-settings>=2.6",
+    "python-dotenv>=1.0",
+    "langgraph>=0.2",
+    "langgraph-checkpoint-sqlite>=2.0",
+    "PyMuPDF>=1.28.2",
+    "Pillow>=12.3",
+    "psutil>=7.2",
+    "python-multipart>=0.0.32",
+    "paddleocr==3.7.0",
+    "paddlepaddle>=3.3.1",
+    "pytesseract>=0.3.13",
+    "faster-whisper==1.2.1",
+    "soundfile>=0.14",
+    "torch>=2.3",
+    "pyannote.audio==4.0.7",
+    "youtube-transcript-api>=1.2.4",
+    "yt-dlp>=2026.8.19",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3",
+    "ruff>=0.7",
+    "reportlab>=4.2",
+]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+# BLE001 (no blind `except Exception`) is excluded: CLAUDE.md §16's actual rule is
+# "no bare `except:`" and explicitly allows catching at true boundaries like a
+# network call to an external service (exactly what it's flagged on here).
+select = ["E", "F", "I", "UP"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]

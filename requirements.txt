@@ -1,0 +1,4 @@
+# Use Python 3.11 on Windows. Install Ollama separately; ffmpeg is required for
+# audio/video ingestion, and Tesseract is the OCR fallback.
+# pyproject.toml is the source of truth for the complete Python dependency set.
+-e .[dev]
